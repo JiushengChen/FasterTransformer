@@ -1,0 +1,118 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+
+        {
+            "name": "Python: translate_example",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceRoot}/examples/pytorch/decoding/translate_example.py",
+            "console": "integratedTerminal",
+            "justMyCode": false,
+            "cwd": "${workspaceFolder}/build",
+            "args": [
+                "--batch_size", "1", 
+                "--beam_size", "32",
+                "--max_seq_len", "16", 
+                "--model_type", "decoding_ext", 
+                "--data_type", "fp16", 
+                "--input_file", "../data/J-inputs-16x100", 
+                "--sampling_topk", "1", 
+                "--output_file", "output-tran.txt"
+            ]
+        },
+        {
+            // pip install snakeviz
+            // snakeviz translate_example.prof # will open a windows in browser, cross machine
+            "name": "Python: translate_example prof",
+            "type": "python",
+            "request": "launch",
+            "module": "cProfile",
+            "cwd": "${workspaceFolder}/build",
+            "args": [
+                "-o", "../data/translate_example.prof",
+                "${workspaceRoot}/examples/pytorch/decoding/translate_example.py",
+                "--batch_size", "1", 
+                "--beam_size", "64",
+                "--max_seq_len", "16", 
+                "--model_type", "decoding_ext", 
+                "--data_type", "fp16", 
+                "--input_file", "../data/J-inputs-16x100", 
+                "--sampling_topk", "1", 
+                "--output_file", "output-tran.txt"
+            ]
+        },
+        {
+            "name": "Python: debug cpp",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "/opt/conda/bin/python",
+            "args": [
+                "${workspaceFolder}/examples/pytorch/bert/bert_example.py",
+                "512",
+                "6",
+                "64",
+                "12",
+                "64",
+                "--fp16",
+                "--time"
+            ],
+            "stopAtEntry": false,
+            "cwd": "${workspaceRoot}/debug",
+            "environment": [
+                {
+                    "name": "LD_LIBRARY_PATH",
+                    "value": "${workspaceRoot}/debug/:$LD_LIBRARY_PATH"
+                }
+            ],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ],
+            "miDebuggerPath": "/usr/bin/gdb"
+        },
+        {
+            "name": "Python: debug tranlate",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "/opt/conda/bin/python",
+            "args": [
+                "${workspaceRoot}/examples/pytorch/decoding/translate_example.py",
+                "--batch_size", "1", 
+                "--beam_size", "32",
+                "--max_seq_len", "16", 
+                "--model_type", "decoding_ext", 
+                "--data_type", "fp16", 
+                "--input_file", "../data/J-inputs-16x100", 
+                "--sampling_topk", "1", 
+                "--output_file", "output-tran.txt"
+            ],
+            "stopAtEntry": false,
+            "cwd": "${workspaceRoot}/build",
+            "environment": [
+                {
+                    "name": "LD_LIBRARY_PATH",
+                    "value": "${workspaceRoot}/build/:$LD_LIBRARY_PATH"
+                }
+            ],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ],
+            "miDebuggerPath": "/usr/bin/gdb"
+        }
+    ]
+}
